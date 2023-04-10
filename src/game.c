@@ -3,14 +3,14 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
-#include "consts.h"
 #include "ground.h"
+#include "player.h"
+
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 static SDL_Window *window;
 static SDL_Renderer *renderer;
-
-static SDL_Texture *mario_texture;
-static SDL_Rect mario_rect = {100, 100, 100, 100};
 
 static int running = 1;
 
@@ -21,7 +21,7 @@ void smb_game_draw(void)
         exit(1);
     }
     smb_ground_draw(renderer);
-    SDL_RenderCopy(renderer, mario_texture, NULL, &mario_rect);
+    smb_player_draw(renderer);
     SDL_RenderPresent(renderer);
 }
 
@@ -63,7 +63,7 @@ int smb_game_is_running(void)
 
 void smb_game_load(void)
 {
-    mario_texture = IMG_LoadTexture(renderer, "../images/mario.png");
+    smb_player_load(renderer);
     smb_ground_load(renderer);
 }
 
@@ -79,7 +79,7 @@ void smb_game_unload(void)
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyTexture(mario_texture);
+    smb_player_unload();
 }
 
 void smb_game_update(void)

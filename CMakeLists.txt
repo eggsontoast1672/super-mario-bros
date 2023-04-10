@@ -10,10 +10,10 @@ pkg_check_modules(SDL2 REQUIRED sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
 
 add_executable(smb
-    src/consts.c
     src/game.c
     src/ground.c
     src/main.c
+    src/player.c
 )
 
 target_include_directories(smb PRIVATE include)

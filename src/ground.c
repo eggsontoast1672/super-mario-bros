@@ -2,11 +2,11 @@
 
 #include <SDL2/SDL_image.h>
 
-#include "consts.h"
+#include "game.h"
 
 const int GROUND_SIZE = 100;
 
-SDL_Texture *ground_texture;
+static SDL_Texture *ground_texture;
 
 void smb_ground_load(SDL_Renderer *renderer) {
     ground_texture = IMG_LoadTexture(renderer, "../images/ground.png");
