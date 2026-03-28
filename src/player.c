@@ -16,7 +16,7 @@ void smb_player_draw(SDL_Renderer *renderer)
 
 void smb_player_load(SDL_Renderer *renderer)
 {
-    texture = IMG_LoadTexture(renderer, "../images/mario.png");
+    texture = IMG_LoadTexture(renderer, ASSET_DIR "mario.png");
 }
 
 void smb_player_unload(void)
