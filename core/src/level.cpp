@@ -61,8 +61,12 @@ void dump_level(const Level &level, std::ostream &stream)
 
 void render_level(const Level &level, SDL_Renderer *renderer)
 {
+    constexpr float block_size = 32.0f;
+
     SDL_FRect source{.w = 16.0f, .h = 16.0f};
-    SDL_FRect dest{.w = 1.0f, .h = 1.0f};
+    
+    // FIXME: Change these values back to 1.0f
+    SDL_FRect dest{.w = block_size, .h = block_size};
 
     for (const Tile &tile : level.tiles) {
         const std::div_t indices = std::div(std::to_underlying(tile.type), 16);
@@ -74,8 +78,8 @@ void render_level(const Level &level, SDL_Renderer *renderer)
         // bottom left corner of the world. However, SDL3 renders stuff with (0, 0) at the top left
         // corner by default, so we will need to know the height of the game world to perform the
         // conversion.
-        dest.x = tile.position_x;
-        dest.y = tile.position_y;
+        dest.x = tile.position_x * block_size;
+        dest.y = tile.position_y * block_size;
 
         SDL_RenderTexture(renderer, g_assets.atlas, &source, &dest);
     }

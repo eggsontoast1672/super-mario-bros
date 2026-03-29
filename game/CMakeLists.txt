@@ -10,11 +10,11 @@ add_executable(
   src/color.c
   src/game.c
   src/ground.c
-  src/main.c
   src/player.c
+  src/main.cpp
 )
 
 target_compile_definitions(smbc PRIVATE ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/../assets/")
 target_compile_options(smbc PRIVATE -Wall -Werror -Wextra -Wpedantic)
 target_include_directories(smbc PRIVATE include)
-target_link_libraries(smbc PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
+target_link_libraries(smbc PRIVATE SDL3::SDL3 SDL3_image::SDL3_image smbc-core)

@@ -13,6 +13,6 @@ add_library(
 # set_property(TARGET smbc-core PROPERTY CXX_STANDARD_REQUIRED ON)
 # set_property(TARGET smbc-core PROPERTY CXX_EXTENSIONS OFF)
 
-target_compile_definitions(smbc-core PRIVATE ASSET_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../")
+target_compile_definitions(smbc-core PRIVATE ASSET_PATH="${CMAKE_CURRENT_SOURCE_DIR}/../assets/")
 target_include_directories(smbc-core PUBLIC include)
 target_link_libraries(smbc-core PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)

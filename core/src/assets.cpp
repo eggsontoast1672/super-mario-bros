@@ -8,6 +8,8 @@
 namespace smbc::core
 {
 
+AssetManager g_assets;
+
 void AssetManager::load_all(SDL_Renderer *renderer)
 {
     atlas = load_texture(ASSET_PATH "atlas.png", renderer);
