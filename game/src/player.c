@@ -1,14 +1,17 @@
 #include "player.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 static SDL_Texture *texture;
-static SDL_Rect rect = {100, 100, 100, 100};
+static SDL_FRect rect = {100, 100, 100, 100};
 
 void smb_player_draw(SDL_Renderer *renderer)
 {
-    if (SDL_RenderCopy(renderer, texture, NULL, &rect) < 0) {
+    if (!SDL_RenderTexture(renderer, texture, NULL, &rect)) {
         fprintf(stderr, "Failed to copy texture to backbuffer: %s\n", SDL_GetError());
         exit(1);
     }

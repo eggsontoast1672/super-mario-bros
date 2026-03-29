@@ -1,10 +1,14 @@
 #include "game.h"
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <SDL3/SDL.h>
+#include <SDL3_image/SDL_image.h>
 
 #include "ground.h"
 #include "player.h"
+#include "smbc/color.h"
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
@@ -16,7 +20,9 @@ static int running = 1;
 
 void smb_game_draw(void)
 {
-    if (SDL_RenderClear(renderer) < 0) {
+    SDL_SetRenderDrawColor(renderer, COLOR_BACKGROUND.r, COLOR_BACKGROUND.g, COLOR_BACKGROUND.b, COLOR_BACKGROUND.a);
+
+    if (!SDL_RenderClear(renderer)) {
         fprintf(stderr, "Failed to clear renderer backbuffer: %s\n", SDL_GetError());
         exit(1);
     }
@@ -27,32 +33,28 @@ void smb_game_draw(void)
 
 void smb_game_initialize(void)
 {
-    int img_init_flags = IMG_INIT_PNG;
-
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (!SDL_Init(SDL_INIT_VIDEO)) {
         fprintf(stderr, "Failed to initialize SDL: %s\n", SDL_GetError());
         exit(1);
     }
-    if (IMG_Init(img_init_flags) != img_init_flags) {
-        fprintf(stderr, "Failed to initialize SDL image: %s\n", IMG_GetError());
-        SDL_Quit();
-        exit(1);
-    }
-    window = SDL_CreateWindow("Mario", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+
+    window = SDL_CreateWindow("Mario", SCREEN_WIDTH, SCREEN_HEIGHT, 0);
+
     if (window == NULL) {
         fprintf(stderr, "Failed to create window: %s\n", SDL_GetError());
         SDL_Quit();
-        IMG_Quit();
         exit(1);
     }
-    renderer = SDL_CreateRenderer(window, -1, 0);
+
+    renderer = SDL_CreateRenderer(window, NULL);
+
     if (renderer == NULL) {
         fprintf(stderr, "Failed to create renderer: %s\n", SDL_GetError());
         SDL_Quit();
-        IMG_Quit();
         SDL_DestroyWindow(window);
         exit(1);
     }
+
     smb_game_load();
 }
 
@@ -72,7 +74,6 @@ void smb_game_quit(void)
     smb_game_unload();
     smb_ground_unload();
     SDL_Quit();
-    IMG_Quit();
 }
 
 void smb_game_unload(void)
@@ -87,7 +88,7 @@ void smb_game_update(void)
     SDL_Event event;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
+        if (event.type == SDL_EVENT_QUIT) {
             running = 0;
         }
     }

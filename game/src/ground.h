@@ -1,7 +1,7 @@
 #ifndef SMB_GROUND_H
 #define SMB_GROUND_H
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 extern const int GROUND_SIZE;
 

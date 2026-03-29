@@ -1,26 +1,14 @@
-cmake_minimum_required(VERSION 3.22.1)
+cmake_minimum_required(VERSION 3.10)
 
-project(SuperMarioBros)
+project(SuperMarioBrosClone LANGUAGES C CXX)
 
 set(CMAKE_C_STANDARD 90)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(PkgConfig)
-
-pkg_check_modules(SDL2 REQUIRED sdl2)
-pkg_check_modules(SDL2_IMAGE REQUIRED SDL2_image)
-
-add_executable(
-  smb
-  src/game.h
-  src/ground.h
-  src/player.h
-  src/game.c
-  src/ground.c
-  src/main.c
-  src/player.c
-)
-
-target_compile_definitions(smb PRIVATE ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/images/")
-target_compile_options(smb PRIVATE -Wall -Werror -Wextra -Wpedantic)
-target_include_directories(smb PRIVATE include)
-target_link_libraries(smb PRIVATE ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES})
+add_subdirectory(core)
+add_subdirectory(editor)
+add_subdirectory(game)
